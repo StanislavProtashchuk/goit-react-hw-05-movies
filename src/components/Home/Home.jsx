@@ -9,7 +9,6 @@ export default function Home() {
     useEffect(() => {
         getTrendingToday().then(response => {
             setFilms(films => response.data.results);
-            console.log(films);
         })
             .catch(error => error.message);
     }, []);
