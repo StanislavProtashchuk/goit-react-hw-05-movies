@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom';
 import { getTrendingToday } from '../../services/API'
 import s from './Home.module.css'
 
 export default function Home() {
-
+    const location = useLocation();
     const [films, setFilms] = useState([]);
     
     useEffect(() => {
@@ -23,13 +24,18 @@ export default function Home() {
                         // className={({ isActive }) => (isActive ? s.activeCardLink : s.cardLink)}
                         className={s.cardLink}
                     >
-                        <img
-                            src={`https://image.tmdb.org/t/p/w300${film.poster_path}`}
-                            alt="" />
-                        {film.original_title}
+                        <Link
+                            to={`movies/${film.id}`}
+                            state={{ from: location }}
+                            className={s.cardLink}
+                        >
+                            <img
+                                src={`https://image.tmdb.org/t/p/w300${film.poster_path}`}
+                                alt="" />
+                            {film.original_title}
+                        </Link>
                     </li>
                 })}
-                
             </ul>
         </div>
     )

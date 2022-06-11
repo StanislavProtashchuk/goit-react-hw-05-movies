@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import s from './Movies.module.css';
 
 export default function Movies() {
@@ -12,7 +12,7 @@ export default function Movies() {
   function handleSubmit(e) {
     e.preventDefault();
     if (query.trim() === '') {
-      return toast.error('Please enter film name');
+      return alert('Please enter film name');
     }
     // onSubmit(query);
     setQuery('');
