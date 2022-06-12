@@ -1,3 +1,9 @@
+.navigation {
+    display: flex;
+    padding: 20px;
+    border-bottom: 3px solid #cac4c4;
+}
+
 .link{
     display: inline-block;
     text-decoration: none;

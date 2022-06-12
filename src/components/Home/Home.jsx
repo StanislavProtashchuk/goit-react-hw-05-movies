@@ -6,6 +6,7 @@ import s from './Home.module.css'
 export default function Home() {
     const location = useLocation();
     const [films, setFilms] = useState([]);
+    const filmImage = 'https://image.tmdb.org/t/p/w300';
     
     useEffect(() => {
         getTrendingToday().then(response => {
@@ -15,13 +16,12 @@ export default function Home() {
     }, []);
 
     return (
-        <div>
+        <>
             <h1>Trending today</h1>
             <ul className={s.cardLinkList}>
                 {films.map(film => {
                     return <li
                         key={film.id}
-                        // className={({ isActive }) => (isActive ? s.activeCardLink : s.cardLink)}
                         className={s.cardLink}
                     >
                         <Link
@@ -30,13 +30,13 @@ export default function Home() {
                             className={s.cardLink}
                         >
                             <img
-                                src={`https://image.tmdb.org/t/p/w300${film.poster_path}`}
+                                src={`${filmImage}${film.poster_path}`}
                                 alt="" />
                             {film.original_title}
                         </Link>
                     </li>
                 })}
             </ul>
-        </div>
+        </>
     )
 }
