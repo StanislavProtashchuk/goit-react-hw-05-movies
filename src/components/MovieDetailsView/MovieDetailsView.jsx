@@ -1,7 +1,12 @@
 import s from './MovieDetailsView.module.css'
+import { lazy, Suspense } from 'react';
 import { useState, useEffect } from "react";
-import {useParams, useLocation, Link } from 'react-router-dom';
+import {Route, Routes, useParams, useLocation, Link } from 'react-router-dom';
 import { getFilmById } from "services/API";
+import { Loader } from 'components/Loader/Loader';
+
+const Cast = lazy(() => import('../Cast/Cast' /* webpackChunkName: "cast" */));
+const Reviews = lazy(() => import('../Reviews/Reviews' /* webpackChunkName: "reviews" */));
 
 export default function MovieDetailsView() {
 
@@ -64,12 +69,12 @@ export default function MovieDetailsView() {
                         </ul>
                     </div>
 
-                    {/* <Suspense fallback={<Loader />}>
+                    <Suspense fallback={<Loader/>}>
                         <Routes>
                             <Route path='cast' element={<Cast />} />
                             <Route path='reviews' element={<Reviews />} />
                         </Routes>
-                    </Suspense> */}
+                    </Suspense>
                 </>
             }
         </>

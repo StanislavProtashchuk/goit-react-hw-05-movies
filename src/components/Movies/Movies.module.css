@@ -73,3 +73,21 @@
     font: inherit;
     font-size: 18px;
 }
+
+.cardLinkList {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.cardLink {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cardLink:hover {
+    transform: scale(1.05)
+}

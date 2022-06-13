@@ -1,9 +1,14 @@
-import { useState } from 'react';
-// import { toast } from 'react-toastify';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { searchFilms } from 'services/API';
 import s from './Movies.module.css';
 
 export default function Movies() {
   const [query, setQuery] = useState('');
+  const [films, setFilms] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const filmImage = 'https://image.tmdb.org/t/p/w300';
 
   function handleQueryChange(e) {
     setQuery(e.currentTarget.value.toLowerCase());
@@ -14,11 +19,28 @@ export default function Movies() {
     if (query.trim() === '') {
       return alert('Please enter film name');
     }
-    // onSubmit(query);
-    setQuery('');
+    
+    navigate({
+      pathname: location.pathname,
+      search: `query=${query}`
+    });
+    
+    searchFilms(query)
+      .then(response => {
+        setFilms(films => response.data.results);
+      })
+      .catch(error => error.message)
+      .finally(() => {
+        setQuery('');
+      });
   };
+  
+  useEffect(() => {
+    location.state !== null && location.state.data && setFilms(films => location.state.data)
+  }, [location]);
 
-    return (
+  return (
+      <>
       <div className={s.Searchbar}>
       <form className={s.SearchForm}  onSubmit={handleSubmit}>
         <button className={s.SearchFormButton}  type="submit">
@@ -35,6 +57,29 @@ export default function Movies() {
           onChange={handleQueryChange}
         />
             </form>
-            </div>
-  );
+    </div>
+      
+      {films && <ul className={s.cardLinkList}>
+        {films.map(film => {
+          return <li
+            key={film.id}
+            className={s.cardLink}
+          >
+            <Link to={`/movies/${film.id}`} state={{
+              from: {
+                path: location.pathname + location.search,
+              },
+              data: films
+            }}
+              className={s.link}>
+              <img
+                src={`${filmImage}${film.poster_path}`}
+                alt="" />
+              {film.original_title}
+            </Link>
+          </li>
+        })}
+      </ul>}
+    </>
+  )
 };

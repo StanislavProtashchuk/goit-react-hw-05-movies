@@ -1,0 +1,19 @@
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin-top: calc(-1 * 20px);
+    margin-left: calc(-1 * 20px);
+    border-bottom: 3px solid #cac4c4;
+}
+
+.item {
+    margin-top: 20px;
+    margin-left: 20px;
+    flex-basis: calc(100% / 5 - 20px);
+}
+
+.image {
+    height: 200px;
+    width: auto;
+}
