@@ -75,7 +75,7 @@ export default function Movies() {
               <img
                 src={`${filmImage}${film.poster_path}`}
                 alt="" />
-              {film.original_title}
+              <h3>{film.original_title}</h3>
             </Link>
           </li>
         })}

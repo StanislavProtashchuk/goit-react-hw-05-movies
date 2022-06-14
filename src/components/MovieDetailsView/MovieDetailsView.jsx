@@ -1,7 +1,7 @@
 import s from './MovieDetailsView.module.css'
 import { lazy, Suspense } from 'react';
 import { useState, useEffect } from "react";
-import {Route, Routes, useParams, useLocation, Link } from 'react-router-dom';
+import {Route, Routes, useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import { getFilmById } from "services/API";
 import { Loader } from 'components/Loader/Loader';
 
@@ -10,11 +10,10 @@ const Reviews = lazy(() => import('../Reviews/Reviews' /* webpackChunkName: "rev
 
 export default function MovieDetailsView() {
 
-    const { filmId } = useParams();    
     const [film, setFilm] = useState();
-    console.log(filmId);
-    
+    const { filmId } = useParams();
     const location = useLocation();
+    const navigate = useNavigate();
     const filmImage = 'https://image.tmdb.org/t/p/w300';
 
     useEffect(() => {
@@ -24,22 +23,22 @@ export default function MovieDetailsView() {
             .catch(error => error.message);
     }, [filmId]);
 
-        const state = {
-        data: location.state.data,
-        from: { path: location.pathname }
-    };
+    function goBack () {
+    if (location?.state?.from) {
+      const { pathname, search } = location?.state?.from;
+      return navigate(`${pathname}${search}`);
+    }
+    return navigate('/');
+  };
 
     return (
         <>
             {film &&
                 <>
-                    <Link
-                        to={location?.state?.from?.path ?? '/'}
-                        className={s.button}
-                        state={state}>
-                        Go Back
-                    </Link>
-                    <div className={s.filmCard}>
+                <button onClick={goBack} className={s.button}>
+                    Go Back
+                </button>
+                <div className={s.filmCard}>
                         <img src={`${filmImage}${film.poster_path}`} alt={film.original_title} />
                         <div className={s.filmInfo}>
                             <h2 className={s.title}>{film.original_title}</h2>
@@ -68,7 +67,7 @@ export default function MovieDetailsView() {
                                 className={s.link}
                                 state={location.state}>Reviews</Link>
                             </li>
-                    </ul>
+                        </ul>
                     </div>
 
                     <Suspense fallback={<Loader/>}>
@@ -76,10 +75,9 @@ export default function MovieDetailsView() {
                             <Route path='cast' element={<Cast />} />
                             <Route path='reviews' element={<Reviews />} />
                         </Routes>
-                </Suspense>
+                    </Suspense>
                 </>
             }
         </>
     )
 };
-

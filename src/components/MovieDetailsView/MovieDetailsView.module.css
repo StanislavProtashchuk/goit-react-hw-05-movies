@@ -5,14 +5,14 @@
     font-weight: 500;
     color: #2a363b;
     font-size: 18px;
+    border: none;
+    background-color: transparent;
 }
 
 .button:hover,
 .button:focus {
         color: #2196f3;
 }
-
-
 
 .filmCard {
     display: flex;
