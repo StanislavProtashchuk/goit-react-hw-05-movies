@@ -10,8 +10,10 @@ const Reviews = lazy(() => import('../Reviews/Reviews' /* webpackChunkName: "rev
 
 export default function MovieDetailsView() {
 
+    const { filmId } = useParams();    
     const [film, setFilm] = useState();
-    const { filmId } = useParams();
+    console.log(filmId);
+    
     const location = useLocation();
     const filmImage = 'https://image.tmdb.org/t/p/w300';
 
@@ -66,7 +68,7 @@ export default function MovieDetailsView() {
                                 className={s.link}
                                 state={location.state}>Reviews</Link>
                             </li>
-                        </ul>
+                    </ul>
                     </div>
 
                     <Suspense fallback={<Loader/>}>
@@ -74,7 +76,7 @@ export default function MovieDetailsView() {
                             <Route path='cast' element={<Cast />} />
                             <Route path='reviews' element={<Reviews />} />
                         </Routes>
-                    </Suspense>
+                </Suspense>
                 </>
             }
         </>
