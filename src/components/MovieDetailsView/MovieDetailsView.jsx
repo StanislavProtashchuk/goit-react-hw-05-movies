@@ -13,7 +13,6 @@ export default function MovieDetailsView() {
     const [film, setFilm] = useState();
     const { filmId } = useParams();
     const location = useLocation();
-    const navigate = useNavigate();
     const filmImage = 'https://image.tmdb.org/t/p/w300';
 
     useEffect(() => {
@@ -23,21 +22,22 @@ export default function MovieDetailsView() {
             .catch(error => error.message);
     }, [filmId]);
 
-    function goBack () {
-    if (location?.state?.from) {
-      const { pathname, search } = location?.state?.from;
-      return navigate(`${pathname}${search}`);
-    }
-    return navigate('/');
-  };
+        const state = {
+        data: location.state.data,
+        from: { path: location.pathname }
+    };
 
     return (
         <>
             {film &&
                 <>
-                <button onClick={goBack} className={s.button}>
+                <Link
+                    to={location?.state?.from?.path ?? '/'}
+                    className={s.button}
+                    state={state}>
                     Go Back
-                </button>
+                </Link>
+
                 <div className={s.filmCard}>
                         <img src={`${filmImage}${film.poster_path}`} alt={film.original_title} />
                         <div className={s.filmInfo}>
