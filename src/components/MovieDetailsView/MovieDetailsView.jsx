@@ -1,7 +1,7 @@
 import s from './MovieDetailsView.module.css'
 import { lazy, Suspense } from 'react';
 import { useState, useEffect } from "react";
-import {Route, Routes, useParams, useLocation, useNavigate, Link } from 'react-router-dom';
+import {Route, Routes, useParams, useLocation, Link } from 'react-router-dom';
 import { getFilmById } from "services/API";
 import { Loader } from 'components/Loader/Loader';
 
