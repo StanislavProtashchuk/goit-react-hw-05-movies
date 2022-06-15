@@ -8,7 +8,10 @@ export default function Movies() {
   const [films, setFilms] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const queryString = require('query-string');
   const filmImage = 'https://image.tmdb.org/t/p/w300';
+  const parsed = queryString.parse(location.search);
+  const search = parsed.query;
 
   function handleQueryChange(e) {
     setQuery(e.currentTarget.value.toLowerCase());
@@ -34,10 +37,16 @@ export default function Movies() {
         setQuery('');
       });
   };
-  
+
   useEffect(() => {
-    location.state !== null && location.state.data && setFilms(films => location.state.data)
-  }, [location]);
+    if (search) {
+      searchFilms(search)
+        .then(response => {
+          setFilms(films => response.data.results);
+        })
+        .catch(error => error.message)
+    }
+  }, [search]);
 
   return (
       <>

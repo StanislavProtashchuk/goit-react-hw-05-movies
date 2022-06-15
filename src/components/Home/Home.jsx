@@ -32,8 +32,7 @@ export default function Home() {
                             <img
                                 src={`${filmImage}${film.poster_path}`}
                                 alt="" />
-                            <h3>{film.original_title}</h3>
-                            
+                            <h3>{film.original_title}</h3>                            
                         </Link>
                     </li>
                 })}

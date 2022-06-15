@@ -7,8 +7,9 @@ export function getTrendingToday() {
     return axios.get(`${BASE_URL}trending/movie/day?api_key=${KEY}`);
 };
 
-export function searchFilms (query) {
+export function searchFilms(query) {
     return axios(`${BASE_URL}search/movie?api_key=${KEY}&query=${query}`);
+    
 };
 
 export function getFilmById(filmId){

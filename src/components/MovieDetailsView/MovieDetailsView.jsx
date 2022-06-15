@@ -23,7 +23,6 @@ export default function MovieDetailsView() {
     }, [filmId]);
 
         const state = {
-        data: location.state.data,
         from: { path: location.pathname }
     };
 
